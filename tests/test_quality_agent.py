@@ -1,4 +1,4 @@
-from agents.quality_agent.agent import QualityAgent
+from agents.quality_agent.agent import QualityAgent 
 
 
 def test_quality_agent_detects_missing_values():
