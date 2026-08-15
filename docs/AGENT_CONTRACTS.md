@@ -73,7 +73,9 @@ Ocorreu um erro durante a execução.
 
 ## Responsabilidade
 
-Orquestrar o fluxo de execução.
+Orquestrar o fluxo de execução entre os agentes do sistema.
+
+O Coordinator deverá receber a solicitação do usuário, identificar o dataset e encaminhar a tarefa para os agentes responsáveis.
 
 ## Entrada
 
@@ -84,5 +86,70 @@ O Coordinator deverá receber:
   "task_id": "string",
   "user_request": "string",
   "dataset_path": "string",
+  "context": {}
+}
+
+---
+
+# 5. Contrato do Quality Agent
+
+## Responsabilidade
+
+Analisar a qualidade estrutural e semântica do dataset recebido pelo sistema.
+
+O Quality Agent deverá identificar problemas de qualidade de dados antes que o dataset seja encaminhado para análises posteriores.
+
+## Entrada
+
+O Quality Agent deverá receber:
+
+```json
+{
+  "task_id": "string",
+  "dataset_path": "string",
+  "context": {}
+}
+
+---
+
+# 6. Contrato do Analytics Agent
+
+## Responsabilidade
+
+Executar análises sobre os dados após a validação realizada pelo Quality Agent.
+
+O Analytics Agent deverá utilizar os dados disponíveis e produzir métricas e insights relevantes para a tomada de decisão.
+
+## Entrada
+
+O Analytics Agent deverá receber:
+
+```json
+{
+  "task_id": "string",
+  "dataset_path": "string",
+  "quality_report": {},
+  "context": {}
+}
+
+---
+
+# 7. Contrato do Reviewer Agent
+
+## Responsabilidade
+
+Revisar os resultados produzidos pelos agentes anteriores e verificar sua consistência, qualidade e conformidade com os contratos definidos.
+
+O Reviewer Agent deverá identificar erros, inconsistências ou informações que necessitem de correção antes da entrega final.
+
+## Entrada
+
+O Reviewer Agent deverá receber:
+
+```json
+{
+  "task_id": "string",
+  "quality_report": {},
+  "analytics_result": {},
   "context": {}
 }
