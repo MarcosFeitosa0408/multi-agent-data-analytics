@@ -88,7 +88,7 @@ O Coordinator deverá receber:
   "dataset_path": "string",
   "context": {}
 }
-
+```
 ---
 
 # 5. Contrato do Quality Agent
@@ -109,7 +109,7 @@ O Quality Agent deverá receber:
   "dataset_path": "string",
   "context": {}
 }
-
+```
 ---
 
 # 6. Contrato do Analytics Agent
@@ -131,7 +131,7 @@ O Analytics Agent deverá receber:
   "quality_report": {},
   "context": {}
 }
-
+```
 ---
 
 # 7. Contrato do Reviewer Agent
@@ -153,7 +153,7 @@ O Reviewer Agent deverá receber:
   "analytics_result": {},
   "context": {}
 }
-
+```
 ---
 
 # 8. Contrato do Final Result
@@ -175,7 +175,7 @@ O Final Result deverá receber:
   "analytics_result": {},
   "review_result": {}
 }
-
+```
 ---
 
 # 9. Regras Gerais dos Contratos
@@ -275,7 +275,7 @@ Exemplo:
 
 ```text
 task_001
-
+```
 ---
 
 # 11. Versionamento dos Contratos
@@ -323,7 +323,7 @@ Exemplo:
 
 ```text
 docs: update analytics agent contract
-
+```
 ---
 
 # 12. Compatibilidade entre Agentes
@@ -359,7 +359,7 @@ Exemplo:
     "message": "Campo obrigatório ausente."
   }
 }
-
+```
 ---
 
 # 13. Fluxo de Execução Completo
@@ -439,7 +439,7 @@ Analytics Agent
 Reviewer Agent
   ↓
 Final Result
-
+```
 ---
 
 # 14. Contrato de Contexto
@@ -464,7 +464,7 @@ Exemplo:
     "environment": "development"
   }
 }
-
+```
 ---
 
 # 15. Contrato de Persistência de Resultados
@@ -500,6 +500,6 @@ Estrutura esperada:
   "quality_score": 0.0,
   "issues": []
 }
-
+```
 ---
 
