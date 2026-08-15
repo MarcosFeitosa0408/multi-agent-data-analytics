@@ -298,6 +298,39 @@ O Reviewer Agent deverá receber:
   "context": {}
 }
 ```
+
+Eu tirei o ````markdown vou colar Assim - 
+
+## Campos obrigatórios
+
+- `task_id`: identificador único da execução.
+- `quality_report`: resultado produzido pelo Quality Agent.
+- `analytics_result`: resultado produzido pelo Analytics Agent.
+
+## Critérios de revisão
+
+O Reviewer Agent deverá verificar, no mínimo:
+
+- presença dos campos obrigatórios;
+- consistência entre o `quality_report` e o `analytics_result`;
+- coerência das métricas produzidas;
+- consistência dos insights produzidos;
+- conformidade com os contratos definidos;
+- existência de erros ou inconsistências relevantes.
+
+## Aprovação
+
+Quando os resultados estiverem consistentes e em conformidade com os contratos, o Reviewer Agent deverá retornar:
+
+```json
+{
+  "agent": "reviewer_agent",
+  "status": "APPROVED",
+  "task_id": "string",
+  "approved": true,
+  "issues": []
+}
+```
 ---
 
 # 8. Contrato do Final Result
