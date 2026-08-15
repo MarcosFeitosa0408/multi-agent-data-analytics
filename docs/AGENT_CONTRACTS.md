@@ -196,6 +196,86 @@ O Analytics Agent deverá receber:
   "context": {}
 }
 ```
+
+## Campos obrigatórios
+
+- `task_id`: identificador único da execução.
+- `dataset_path`: caminho do dataset que deverá ser analisado.
+- `quality_report`: resultado produzido pelo Quality Agent.
+
+## Pré-condições
+
+O Analytics Agent somente deverá executar a análise quando o `quality_report` estiver disponível.
+
+Caso o Quality Agent retorne `ERROR`, o Analytics Agent não deverá executar a análise e deverá retornar um erro estruturado.
+
+## Análises
+
+O Analytics Agent deverá executar, no mínimo:
+
+- análise descritiva dos dados;
+- cálculo de métricas relevantes;
+- identificação de padrões e tendências;
+- identificação de indicadores relevantes para a tomada de decisão.
+
+## Saída
+
+O Analytics Agent deverá retornar uma mensagem estruturada:
+
+```json
+{
+  "agent": "analytics_agent",
+  "status": "COMPLETED",
+  "task_id": "string",
+  "dataset": "string",
+  "metrics": {},
+  "insights": []
+}
+```
+
+## Estrutura de `metrics`
+
+Cada métrica deverá possuir informações suficientes para identificar seu significado e seu valor.
+
+Exemplo:
+
+```json
+{
+  "name": "string",
+  "value": 0.0,
+  "description": "string"
+}
+```
+
+## Estrutura de `insights`
+
+Cada insight deverá possuir:
+
+```json
+{
+  "type": "string",
+  "description": "string",
+  "severity": "LOW|MEDIUM|HIGH|CRITICAL"
+}
+```
+
+## Erro
+
+Caso o dataset não possa ser carregado, o `quality_report` esteja indisponível ou ocorra uma falha durante a análise, o agente deverá retornar:
+
+```json
+{
+  "agent": "analytics_agent",
+  "status": "ERROR",
+  "task_id": "string",
+  "dataset": "string",
+  "error": {
+    "type": "string",
+    "message": "string"
+  }
+}
+```
+
 ---
 
 # 7. Contrato do Reviewer Agent
