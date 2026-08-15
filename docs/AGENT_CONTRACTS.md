@@ -110,6 +110,70 @@ O Quality Agent deverá receber:
   "context": {}
 }
 ```
+## Campos obrigatórios
+
+- `task_id`: identificador único da execução.
+- `dataset_path`: caminho do dataset que deverá ser analisado.
+
+## Validações
+
+O Quality Agent deverá executar, no mínimo, as seguintes regras:
+
+| Regra | Validação |
+|---|---|
+| Q01 | Identificação de `order_id` duplicado |
+| Q02 | Identificação de valores ausentes |
+| Q05 | Identificação de valores negativos em `total_sales` |
+| Q06 | Validação da consistência matemática das vendas |
+
+## Saída
+
+O Quality Agent deverá retornar uma mensagem estruturada:
+
+```json
+{
+  "agent": "quality_agent",
+  "status": "COMPLETED",
+  "task_id": "string",
+  "dataset": "string",
+  "rows": 0,
+  "columns": 0,
+  "quality_score": 0.0,
+  "issues": []
+}
+```
+
+## Estrutura de `issues`
+
+Cada problema encontrado deverá possuir:
+
+```json
+{
+  "rule": "string",
+  "severity": "LOW|MEDIUM|HIGH|CRITICAL",
+  "type": "string",
+  "column": "string|null",
+  "count": 0,
+  "message": "string"
+}
+```
+
+## Erro
+
+Caso o dataset não possa ser carregado ou ocorra uma falha durante a análise, o agente deverá retornar:
+
+```json
+{
+  "agent": "quality_agent",
+  "status": "ERROR",
+  "task_id": "string",
+  "dataset": "string",
+  "error": {
+    "type": "string",
+    "message": "string"
+  }
+}
+```
 ---
 
 # 6. Contrato do Analytics Agent
