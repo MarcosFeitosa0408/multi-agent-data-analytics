@@ -318,6 +318,7 @@ O Reviewer Agent deverá verificar, no mínimo:
 - conformidade com os contratos definidos;
 - existência de erros ou inconsistências relevantes.
 
+
 ## Aprovação
 
 Quando os resultados estiverem consistentes e em conformidade com os contratos, o Reviewer Agent deverá retornar:
@@ -331,6 +332,44 @@ Quando os resultados estiverem consistentes e em conformidade com os contratos, 
   "issues": []
 }
 ```
+
+## Rejeição
+
+Quando forem identificados problemas que impeçam a aprovação, o Reviewer Agent deverá retornar:
+
+```json
+{
+  "agent": "reviewer_agent",
+  "status": "REJECTED",
+  "task_id": "string",
+  "approved": false,
+  "issues": [
+    {
+      "type": "string",
+      "severity": "LOW|MEDIUM|HIGH|CRITICAL",
+      "message": "string"
+    }
+  ]
+}
+```
+
+## Erro
+
+Caso ocorra uma falha durante a revisão, o agente deverá retornar:
+
+```json
+{
+  "agent": "reviewer_agent",
+  "status": "ERROR",
+  "task_id": "string",
+  "approved": false,
+  "error": {
+    "type": "string",
+    "message": "string"
+  }
+}
+```
+
 ---
 
 # 8. Contrato do Final Result
