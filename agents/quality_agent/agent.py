@@ -43,8 +43,9 @@ class QualityAgent:
         "Boleto",
     }
 
-    def __init__(self, dataset_path: str):
-        self.dataset_path = Path(dataset_path)
+   def __init__(self, dataset_path: str, task_id: str = "task_001"):
+    self.dataset_path = Path(dataset_path)
+    self.task_id = task_id
 
     def load_data(self) -> pd.DataFrame:
         """Carrega o dataset sem modificar o arquivo original."""
@@ -329,9 +330,10 @@ class QualityAgent:
 
         return round(max(0.0, min(100.0, score)), 2)
 
-    def run(self) -> dict:
-        """Executa todas as verificações de qualidade."""
+   def run(self) -> dict:
+    """Executa todas as verificações de qualidade."""
 
+    try:
         df = self.load_data()
 
         issues = []
@@ -359,11 +361,24 @@ class QualityAgent:
         return {
             "agent": "quality_agent",
             "status": status,
+            "task_id": self.task_id,
             "dataset": str(self.dataset_path),
             "rows": int(len(df)),
             "columns": int(len(df.columns)),
             "quality_score": quality_score,
             "issues": issues,
+        }
+
+    except Exception as exc:
+        return {
+            "agent": "quality_agent",
+            "status": "ERROR",
+            "task_id": self.task_id,
+            "dataset": str(self.dataset_path),
+            "error": {
+                "type": type(exc).__name__,
+                "message": str(exc),
+            },
         }
 
     def export_report(
