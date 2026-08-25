@@ -58,3 +58,24 @@ def test_quality_agent_returns_expected_status():
     report = agent.run()
 
     assert report["status"] == "COMPLETED"
+
+
+def test_quality_agent_returns_task_id():
+    agent = QualityAgent("data/sales.csv")
+
+    report = agent.run()
+
+    assert "task_id" in report
+    assert report["task_id"]
+
+
+def test_quality_agent_error_returns_structured_error():
+    agent = QualityAgent("data/dataset_inexistente.csv")
+
+    report = agent.run()
+
+    assert report["status"] == "ERROR"
+    assert "task_id" in report
+    assert "error" in report
+    assert "type" in report["error"]
+    assert "message" in report["error"]
