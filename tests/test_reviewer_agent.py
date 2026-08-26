@@ -1,7 +1,7 @@
 from agents.reviewer_agent.agent import ReviewerAgent
 
 
-def test_reviewer_agent_approves_valid_result():
+def test_reviewer_agent_approves_valid_result(): 
     quality_report = {
         "agent": "quality_agent",
         "status": "COMPLETED",
