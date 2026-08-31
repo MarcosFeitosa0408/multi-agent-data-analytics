@@ -590,13 +590,32 @@ O usuário deverá fornecer uma solicitação contendo a tarefa que deseja execu
 
 ## Etapa 2 — Coordinator Agent
 
+O Coordinator Agent é responsável por iniciar e orquestrar a execução do sistema.
+
 O Coordinator Agent deverá:
 
 1. Receber a solicitação do usuário.
-2. Criar o `task_id`.
-3. Identificar o dataset.
-4. Preparar o contexto da execução.
-5. Encaminhar a tarefa para o Quality Agent.
+2. Criar ou receber o `task_id` da execução.
+3. Identificar o dataset que será analisado.
+4. Validar se os dados necessários para iniciar a execução estão disponíveis.
+5. Preparar o contexto da execução.
+6. Encaminhar a tarefa para o Quality Agent.
+7. Preservar o `task_id` durante todo o fluxo.
+8. Não executar diretamente as responsabilidades dos demais agentes.
+9. Utilizar exclusivamente os contratos definidos para comunicação entre os agentes.
+
+### Entrada
+
+O Coordinator Agent deverá receber uma solicitação contendo:
+
+```json
+{
+  "task_id": "string",
+  "dataset_path": "string",
+  "context": {}
+}
+
+```
 
 ## Etapa 3 — Quality Agent
 
