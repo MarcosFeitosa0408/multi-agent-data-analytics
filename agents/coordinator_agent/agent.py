@@ -4,14 +4,19 @@ Coordinator Agent
 Responsible for orchestrating the execution flow between agents.
 """
 
-from typing import Any
+import uuid
 
 
 class CoordinatorAgent:
     """Agent responsible for coordinating the analytics workflow."""
 
-    def __init__(self, task_id: str = "task_001"):
-        self.task_id = task_id
+    def __init__(self, task_id: str | None = None):
+        self.task_id = task_id or self._generate_task_id()
+
+    def _generate_task_id(self) -> str:
+        """Generate a unique execution identifier."""
+
+        return f"task_{uuid.uuid4().hex[:8]}"
 
     def validate_input(self, request: dict) -> list:
         """Validate the initial user request."""
@@ -70,7 +75,7 @@ class CoordinatorAgent:
         }
 
     def run(self, request: dict) -> dict:
-        """Execute the coordinator validation and preparation."""
+        """Execute coordinator validation and preparation."""
 
         try:
             issues = self.validate_input(request)
