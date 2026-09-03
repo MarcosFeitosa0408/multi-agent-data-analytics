@@ -13,12 +13,15 @@ Quality Agent
 Analytics Agent
     ↓
 Reviewer Agent
+    ↓
+Final Result Agent
 """
 
 from agents.coordinator_agent.agent import CoordinatorAgent
 from agents.quality_agent.agent import QualityAgent
 from agents.analytics_agent.agent import AnalyticsAgent
 from agents.reviewer_agent.agent import ReviewerAgent
+from agents.final_result_agent.agent import FinalResultAgent
 
 
 class AnalyticsPipeline:
@@ -77,7 +80,9 @@ class AnalyticsPipeline:
             task_id=task_id,
         )
 
-        analytics_result = analytics_agent.run()
+        analytics_result = analytics_agent.run(
+            quality_report=quality_result
+        )
 
         if analytics_result["status"] != "COMPLETED":
             return {
@@ -114,7 +119,31 @@ class AnalyticsPipeline:
             }
 
         # ---------------------------------------------------------
-        # 5. Final Pipeline Result
+        # 5. Final Result Agent
+        # ---------------------------------------------------------
+        final_result_agent = FinalResultAgent(task_id=task_id)
+
+        final_result = final_result_agent.run(
+            quality_report=quality_result,
+            analytics_result=analytics_result,
+            review_result=review_result,
+        )
+
+        if final_result["status"] != "COMPLETED":
+            return {
+                "pipeline": "analytics_pipeline",
+                "status": "ERROR",
+                "task_id": task_id,
+                "failed_agent": "final_result_agent",
+                "coordinator": coordinator_result,
+                "quality": quality_result,
+                "analytics": analytics_result,
+                "review": review_result,
+                "final_result": final_result,
+            }
+
+        # ---------------------------------------------------------
+        # 6. Final Pipeline Result
         # ---------------------------------------------------------
         return {
             "pipeline": "analytics_pipeline",
@@ -126,4 +155,5 @@ class AnalyticsPipeline:
             "quality": quality_result,
             "analytics": analytics_result,
             "review": review_result,
+            "final_result": final_result,
         }
