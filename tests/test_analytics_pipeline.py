@@ -20,6 +20,10 @@ def test_analytics_pipeline_executes_complete_flow():
     assert result["analytics"]["status"] == "COMPLETED"
     assert result["review"]["status"] == "APPROVED"
 
+    assert "final_result" in result
+    assert result["final_result"]["status"] == "COMPLETED"
+    assert result["final_result"]["approved"] is True
+
 
 def test_analytics_pipeline_preserves_task_id():
     pipeline = AnalyticsPipeline(task_id="task_pipeline_002")
@@ -36,6 +40,7 @@ def test_analytics_pipeline_preserves_task_id():
     assert result["quality"]["task_id"] == "task_pipeline_002"
     assert result["analytics"]["task_id"] == "task_pipeline_002"
     assert result["review"]["task_id"] == "task_pipeline_002"
+    assert result["final_result"]["task_id"] == "task_pipeline_002"
 
 
 def test_analytics_pipeline_rejects_invalid_request():
