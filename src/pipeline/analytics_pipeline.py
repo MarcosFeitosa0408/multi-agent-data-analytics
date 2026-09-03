@@ -80,9 +80,7 @@ class AnalyticsPipeline:
             task_id=task_id,
         )
 
-        analytics_result = analytics_agent.run(
-            quality_report=quality_result
-        )
+      analytics_result = analytics_agent.run()
 
         if analytics_result["status"] != "COMPLETED":
             return {
