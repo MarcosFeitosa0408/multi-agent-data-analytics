@@ -43,9 +43,9 @@ class QualityAgent:
         "Boleto",
     }
 
-   def __init__(self, dataset_path: str, task_id: str = "task_001"):
-    self.dataset_path = Path(dataset_path)
-    self.task_id = task_id
+      def __init__(self, dataset_path: str, task_id: str = "task_001"):
+        self.dataset_path = Path(dataset_path)
+        self.task_id = task_id
 
     def load_data(self) -> pd.DataFrame:
         """Carrega o dataset sem modificar o arquivo original."""
